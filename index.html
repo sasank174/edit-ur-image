@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EDIT UR IMAGE</title>
+    <link href='https://fonts.googleapis.com/css?family=Fontdiner Swanky' rel='stylesheet'>
+    <script src="https://cdn.bootcss.com/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdn.bootcss.com/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+    <style>
+        input[type=range][orient=vertical] {
+            writing-mode: bt-lr;
+            /* IE */
+            -webkit-appearance: slider-vertical;
+            /* WebKit */
+            width: 8px;
+            height: 250px;
+            padding: 0 5px;
+        }
+
+        body {
+            font-family: 'Fontdiner Swanky';
+            font-size: 22px;
+            background-color: rgb(25, 203, 212);
+        }
+
+
+        .div {
+            float: right;
+            width: 200px;
+            text-align: center;
+        }
+
+        .forlable,
+        h1 {
+            cursor: pointer;
+            background-color: rgb(220, 233, 33);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        #down {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <p style="text-align: center;font-size: 70px;">EDIT UR IMAGE</p>
+    <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
+    <p style="text-align:center"><label for="file" class="forlable">Upload Image</label></p>
+
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById('image');
+            image.src = URL.createObjectURL(event.target.files[0]);
+            document.getElementById("down").style.display = "block";
+        };
+    </script>
+    <div style="float: left;">
+        <p id="no" style="float: left;"><img id="image"></p>
+        <h1 id="down">download</h1>
+    </div>
+    <div class="div">
+        <p>width</p>
+        <input type="range" orient="vertical" id="slider10" min="20" max="1000" value="100">
+    </div>
+    <div class="div">
+        <p>height</p>
+        <input type="range" orient="vertical" id="slider11" min="20" max="1000" value="100">
+    </div>
+    <div class="div">
+        <p>border-radius</p>
+        <input type="range" orient="vertical" id="slider12" min="0" max="100" value="0">
+    </div>
+    <div class="div">
+        <p>blur</p>
+        <input type="range" orient="vertical" id="slider1" min="0" max="100" value="0">
+    </div>
+    <div class="div">
+        <p>brightness</p>
+        <input type="range" orient="vertical" id="slider2" min="100" max="1000" value="100">
+    </div>
+    <div class="div">
+        <p>contrast</p>
+        <input type="range" orient="vertical" id="slider3" min="100" max="1000" value="100">
+    </div>
+    <div class="div">
+        <p>grayscale</p>
+        <input type="range" orient="vertical" id="slider4" min="0" max="100" value="0">
+    </div>
+    <div class="div">
+        <p>hue-rotate</p>
+        <input type="range" orient="vertical" id="slider5" min="0" max="360" value="0">
+    </div>
+    <div class="div">
+        <p>invert</p>
+        <input type="range" orient="vertical" id="slider6" min="0" max="100" value="0">
+    </div>
+    <div class="div">
+        <p>opacity</p>
+        <input type="range" orient="vertical" id="slider7" min="0" max="100" value="100">
+    </div>
+    <div class="div">
+        <p>saturate</p>
+        <input type="range" orient="vertical" id="slider8" min="100" max="1000" value="100">
+    </div>
+    <div class="div">
+        <p>sepia</p>
+        <input type="range" orient="vertical" id="slider9" min="0" max="100" value="0">
+    </div>
+
+
+
+
+
+    <script>
+        var node = document.getElementById('no');
+        var btn = document.getElementById('down');
+
+        btn.onclick = function () {
+            domtoimage.toBlob(document.getElementById('no'))
+                .then(function (blob) {
+                    window.saveAs(blob, 'my-node.png');
+                });
+        }
+    </script>
+
+
+    <script>
+        var img = document.getElementById("image");
+
+
+        var slider10 = document.getElementById("slider10");
+        var slider11 = document.getElementById("slider11");
+        var slider12 = document.getElementById("slider12");
+        var slider1 = document.getElementById("slider1");
+        var slider2 = document.getElementById("slider2");
+        var slider3 = document.getElementById("slider3");
+        var slider4 = document.getElementById("slider4");
+        var slider5 = document.getElementById("slider5");
+        var slider6 = document.getElementById("slider6");
+        var slider7 = document.getElementById("slider7");
+        var slider8 = document.getElementById("slider8");
+        var slider9 = document.getElementById("slider9");
+
+
+        var width = slider10.value;
+        var height = slider11.value;
+        var border = slider12.value;
+        var blur = slider1.value;
+        var brightness = slider2.value;
+        var contrast = slider3.value;
+        var grayscale = slider4.value;
+        var huerotate = slider5.value;
+        var invert = slider6.value;
+        var opacity = slider7.value;
+        var saturate = slider8.value;
+        var sepia = slider9.value;
+
+
+
+
+        slider1.addEventListener("input", function () {
+            blur = this.value;
+            img.style.filter = "blur(" + this.value + "px) brightness(" + brightness + "%) contrast(" +
+                contrast + "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" +
+                invert + "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider2.addEventListener("input", function () {
+            brightness = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + this.value + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider3.addEventListener("input", function () {
+            contrast = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + this.value +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider4.addEventListener("input", function () {
+            grayscale = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + this.value + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider5.addEventListener("input", function () {
+            huerotate = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + this.value + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider6.addEventListener("input", function () {
+            invert = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + this.value +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider7.addEventListener("input", function () {
+            opacity = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + this.value + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider8.addEventListener("input", function () {
+            saturate = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + this.value + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider9.addEventListener("input", function () {
+            sepia = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + this.value + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider10.addEventListener("input", function () {
+            width = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = this.value + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider11.addEventListener("input", function () {
+            height = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = this.value + "px";
+            img.style.borderRadius = border + "%";
+        });
+        slider12.addEventListener("input", function () {
+            border = this.value;
+            img.style.filter = "blur(" + blur + "px) brightness(" + brightness + "%) contrast(" + contrast +
+                "%) grayscale(" + grayscale + "%) hue-rotate(" + huerotate + "deg) invert(" + invert +
+                "%) opacity(" + opacity + "%) saturate(" + saturate + "%) sepia(" + sepia + "%)";
+            img.style.width = width + "px";
+            img.style.height = height + "px";
+            img.style.borderRadius = this.value + "%";
+        });
+    </script>
+</body>
+
+</html>
